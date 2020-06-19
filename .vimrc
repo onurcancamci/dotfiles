@@ -1,5 +1,7 @@
 " vim-bootstrap
 
+set nocompatible
+
 "*****************************************************************************
 "" Vim-PLug core
 "*****************************************************************************
@@ -95,12 +97,12 @@ Plug 'jimenezrick/vimerl'
 
 
 " go
-"" Go Lang Bundle
+" Go Lang Bundle
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 
 
 " haskell
-"" Haskell Bundle
+" Haskell Bundle
 Plug 'eagletmt/neco-ghc'
 Plug 'dag/vim2hs'
 Plug 'pbrisbin/vim-syntax-shakespeare'
@@ -113,14 +115,13 @@ Plug 'gorodinskiy/vim-coloresque'
 Plug 'tpope/vim-haml'
 Plug 'mattn/emmet-vim'
 
-
 " javascript
 "" Javascript Bundle
 Plug 'jelera/vim-javascript-syntax'
 
 
 " lisp
-"" Lisp Bundle
+" Lisp Bundle
 Plug 'vim-scripts/slimv.vim'
 
 
@@ -131,7 +132,7 @@ Plug 'xolox/vim-lua-inspect'
 
 
 " php
-"" PHP Bundle
+" PHP Bundle
 Plug 'arnaud-lb/vim-php-namespace'
 
 
@@ -237,7 +238,7 @@ function! s:check_back_space() abort
 endfunction
 
 " Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-shift-space> coc#refresh()
+inoremap <silent><expr> <c-space> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
 " position. Coc only does snippet and additional edit on confirm.
@@ -657,7 +658,7 @@ endif
 
 "" Copy/Paste/Cut
 if has('unnamedplus')
-    set clipboard=unnamed,unnamedplus
+    "set clipboard=unnamed,unnamedplus
 endif
 
 noremap YY "+y<CR>
@@ -925,10 +926,26 @@ endif
 
 set guicursor=a:ver30
 
-nnoremap <leader>j zfi}
+"nnoremap <leader>j zfi}
+
+
+nnoremap s :w<cr>
+"vnoremap <leader>j :w !/mnt/c/Windows/System32/clip.exe<cr>
+"xnoremap <leader>j <esc>:'<,'>w !/mnt/c/Windows/System32/clip.exe
+nnoremap <leader>y :call system('/mnt/c/Windows/System32/clip.exe', getreg('"', 1, 1) + (getregtype('"') isnot# 'v' ? [''] : []))<cr>
+
+"nnoremap <leader>j zfi}
+set foldmethod=indent
+set foldnestmax=10
+set nofoldenable
+set foldlevel=2
+
+"let g:matchparen_timeout = 2
+"let g:matchparen_insert_timeout = 2
+
 "set term=xterm-256color
 "set term=screen-256color
-
+"""""
 "set t_Co=256
 
 "let g:onedark_termcolors = 256
