@@ -6,7 +6,6 @@ set nocompatible
 "" Vim-PLug core
 "*****************************************************************************
 let vimplug_exists=expand('~/.vim/autoload/plug.vim')
-
 let g:vim_bootstrap_langs = "c,elixir,elm,erlang,go,haskell,html,javascript,lisp,lua,php,python,rust,scala,typescript"
 let g:vim_bootstrap_editor = "vim"              " nvim or vim
 
@@ -172,11 +171,23 @@ Plug 'Chiel92/vim-autoformat'
 
 Plug 'moll/vim-bbye'
 
+Plug 'kshenoy/vim-signature'
+"Plug 'alx741/vim-rustfmt'
+
+Plug 'chriskempson/base16-vim'
+Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'morhetz/gruvbox'
+Plug 'ayu-theme/ayu-vim'
+Plug 'kylelaker/riscv.vim'
+"Plug 'chrisbra/improvedft'
 "*****************************************************************************
 "*****************************************************************************
 "" [MY] Settings
+let g:rustfmt_on_save = 1
+let g:rustfmt_edition = '2018'
 
-au BufWrite * :Autoformat
+
+au BufWrite *.ts,*.js,*.json,*.rs :Autoformat
 "set clipboard=unnamedplus
 set mouse=a
 set shell=/bin/zsh
@@ -213,6 +224,7 @@ let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclu
 "*****************************************************************************
 "*****************************************************************************
 "" COC
+
 set shortmess+=c
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
@@ -260,15 +272,17 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+"nnoremap <silent> K :call CocAction('doHover')<CR>
+"nnoremap <leader>k :call CocAction('doHover')<CR>
+nnoremap <silent> K :call CocAction('doHover')<CR>
 
-function! s:show_documentation()
-    if (index(['vim','help'], &filetype) >= 0)
-        execute 'h '.expand('<cword>')
-    else
-        call CocAction('doHover')
-    endif
-endfunction
+"function! s:show_documentation()
+""    if (index(['vim','help'], &filetype) >= 0)
+""        execute 'h '.expand('<cword>')
+""    else
+""        call CocAction('doHover')
+""    endif
+"endfunction
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -415,7 +429,9 @@ set ruler
 set number
 
 let no_buffers_menu=1
-silent! colorscheme onedark
+"silent! colorscheme onedark
+"silent! colorscheme onedark
+"silent! colorscheme base16-tomorrow-night
 "silent! colorscheme Tomorrow-Night-Bright
 
 "silent! colorscheme one
@@ -484,7 +500,6 @@ if exists("*fugitive#statusline")
 endif
 
 " vim-airline
-let g:airline_theme = 'onedark' "'powerlineish'
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
@@ -658,7 +673,7 @@ endif
 
 "" Copy/Paste/Cut
 if has('unnamedplus')
-    "set clipboard=unnamed,unnamedplus
+    set clipboard=unnamed,unnamedplus
 endif
 
 noremap YY "+y<CR>
@@ -681,7 +696,6 @@ noremap <leader>w :bn<CR>
 noremap <leader>c :Bdelete<CR>
 
 "" Clean search (highlight)
-nnoremap <silent> <leader><space> :noh<cr>
 
 "" Switching windows
 noremap <C-j> <C-w>j
@@ -923,12 +937,15 @@ else
 endif
 
 
+nnoremap <silent> <leader><space> :noh<cr>:set guicursor=v:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,n-c:ver30<cr>
 
-set guicursor=a:ver30
 
+"set guicursor=a:ver30
+set guicursor=v:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,n-c:ver30
+autocmd CmdlineEnter [/\?] set guicursor=n-c-v:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
 "nnoremap <leader>j zfi}
 
-
+nnoremap S s
 nnoremap s :w<cr>
 "vnoremap <leader>j :w !/mnt/c/Windows/System32/clip.exe<cr>
 "xnoremap <leader>j <esc>:'<,'>w !/mnt/c/Windows/System32/clip.exe
@@ -939,25 +956,25 @@ set foldmethod=indent
 set foldnestmax=10
 set nofoldenable
 set foldlevel=2
+"set nois
 
-"let g:matchparen_timeout = 2
-"let g:matchparen_insert_timeout = 2
+let NERDTreeShowHidden=1
 
-"set term=xterm-256color
-"set term=screen-256color
-"""""
-"set t_Co=256
+let delimitMate_matchpairs = "(:),[:],{:}"
 
-"let g:onedark_termcolors = 256
-"let g:onedark_termcolors = 16
-"set background=dark
-"let g:neodark#use_256color = 1
+inoremap <silent> <Esc> <Esc>`^
+let g:NERDTreeMapMenu='z'
+
+nnoremap <silent> L :call CocAction('doHover')<CR>
+silent! colorscheme base16-gruvbox-dark-hard
+"let ayucolor="dark"
+"silent! colorscheme ayu
+"let g:gruvbox_contrast_dark='hard'
+let g:airline_theme = 'base16' " 'onedark' 'base16' 'powerlineish'
+"set notermguicolors
+set relativenumber
 
 "highlight Normal ctermbg=NONE
 "highlight nonText ctermbg=NONE
 
 "highlight Normal ctermbg=gray13
-"augroup colorset
-"    autocmd!
-"    autocmd ColorScheme * call onedark#set_highlight("Normal", { "bg": "#202020" }) " `bg` will not be styled since there is no `bg` setting
-"augroup END
