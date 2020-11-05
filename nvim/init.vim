@@ -28,6 +28,11 @@ call plug#begin(expand('~/.vim/plugged'))
 "*****************************************************************************
 "" Plug install packages
 "*****************************************************************************
+Plug 'rakr/vim-one'
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
+Plug 'jparise/vim-graphql'
+
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-commentary'
@@ -62,131 +67,85 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 
 "" Snippets
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+"Plug 'SirVer/ultisnips'
+"Plug 'honza/vim-snippets'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'garbas/vim-snipmate'
 
 "" Color
-Plug 'tomasr/molokai'
-Plug 'joshdick/onedark.vim'
-Plug 'rakr/vim-one'
-Plug 'KeitaNakamura/neodark.vim'
-Plug 'mukiwu/vim-tomorrow-night'
+"Plug 'tomasr/molokai'
+Plug 'occ55/onedark.vim'
+"Plug 'rakr/vim-one'
+"Plug 'KeitaNakamura/neodark.vim'
+"Plug 'mukiwu/vim-tomorrow-night'
 
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 "*****************************************************************************
 "" Custom bundles
 "*****************************************************************************
 
-" c
-Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
-Plug 'ludwig/split-manpage.vim'
-
-
 " elixir
-Plug 'elixir-lang/vim-elixir'
-Plug 'carlosgaldino/elixir-snippets'
-
+"Plug 'elixir-lang/vim-elixir'
+"Plug 'carlosgaldino/elixir-snippets'
 
 " elm
 "" Elm Bundle
-Plug 'elmcast/elm-vim'
-
+"Plug 'elmcast/elm-vim'
 
 " erlang
-Plug 'jimenezrick/vimerl'
-
-
-" go
-" Go Lang Bundle
-Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
-
+"Plug 'jimenezrick/vimerl'
 
 " haskell
 " Haskell Bundle
-Plug 'eagletmt/neco-ghc'
-Plug 'dag/vim2hs'
-Plug 'pbrisbin/vim-syntax-shakespeare'
-
-
-" html
-"" HTML Bundle
-Plug 'hail2u/vim-css3-syntax'
-Plug 'gorodinskiy/vim-coloresque'
-Plug 'tpope/vim-haml'
-Plug 'mattn/emmet-vim'
+"Plug 'eagletmt/neco-ghc'
+"Plug 'dag/vim2hs'
+"Plug 'pbrisbin/vim-syntax-shakespeare'
 
 " javascript
 "" Javascript Bundle
 Plug 'jelera/vim-javascript-syntax'
 
-
 " lisp
 " Lisp Bundle
-Plug 'vim-scripts/slimv.vim'
+"Plug 'vim-scripts/slimv.vim'
 
 
 " lua
 "" Lua Bundle
-Plug 'xolox/vim-lua-ftplugin'
-Plug 'xolox/vim-lua-inspect'
-
-
-" php
-" PHP Bundle
-Plug 'arnaud-lb/vim-php-namespace'
-
-
-" python
-"" Python Bundle
-Plug 'davidhalter/jedi-vim'
-Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
-
-
-" rust
-" Vim racer
-Plug 'racer-rust/vim-racer'
-
-" Rust.vim
-Plug 'rust-lang/rust.vim'
+"Plug 'xolox/vim-lua-ftplugin'
+"Plug 'xolox/vim-lua-inspect'
 
 
 " scala
-if has('python')
+"if has('python')
     " sbt-vim
-    Plug 'ktvoelker/sbt-vim'
-endif
+"   Plug 'ktvoelker/sbt-vim'
+"endif
 " vim-scala
-Plug 'derekwyatt/vim-scala'
-
-
-" typescript
-Plug 'leafgarland/typescript-vim'
-Plug 'HerringtonDarkholme/yats.vim'
-
+"Plug 'derekwyatt/vim-scala'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
 Plug 'kien/ctrlp.vim'
-
 Plug 'Chiel92/vim-autoformat'
-
 Plug 'moll/vim-bbye'
-
 Plug 'kshenoy/vim-signature'
 "Plug 'alx741/vim-rustfmt'
 
 Plug 'chriskempson/base16-vim'
-Plug 'chriskempson/vim-tomorrow-theme'
-Plug 'morhetz/gruvbox'
+"Plug 'chriskempson/vim-tomorrow-theme'
+"Plug 'morhetz/gruvbox'
+"Plug 'ayu-theme/ayu-vim'
+Plug 'kylelaker/riscv.vim'
+Plug 'prettier/vim-prettier'
 
 "*****************************************************************************
 "*****************************************************************************
 "" [MY] Settings
-let g:rustfmt_on_save = 1
-let g:rustfmt_edition = '2018'
 
 
-au BufWrite *.ts,*.js,*.json,*.rs :Autoformat
-"set clipboard=unnamedplus
+au BufWrite *.js,*.json :Autoformat
 set mouse=a
 set shell=/bin/zsh
 
@@ -221,146 +180,10 @@ let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclu
 
 "*****************************************************************************
 "*****************************************************************************
-"" COC
 
-set shortmess+=c
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-if has("patch-8.1.1564")
-    " Recently vim can merge signcolumn and number column into one
-    set signcolumn=number
-else
-    set signcolumn=yes
-endif
-
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-if exists('*complete_info')
-    inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
-
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Use K to show documentation in preview window.
-"nnoremap <silent> K :call CocAction('doHover')<CR>
-"nnoremap <leader>k :call CocAction('doHover')<CR>
-nnoremap <silent> K :call CocAction('doHover')<CR>
-
-"function! s:show_documentation()
-""    if (index(['vim','help'], &filetype) >= 0)
-""        execute 'h '.expand('<cword>')
-""    else
-""        call CocAction('doHover')
-""    endif
-"endfunction
-
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
-
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
-augroup mygroup
-    autocmd!
-    " Setup formatexpr specified filetype(s).
-    autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-    " Update signature help on jump placeholder.
-    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
-
-" Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap keys for applying codeAction to the current buffer.
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-" Map function and class text objects
-" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
-
-" Use CTRL-S for selections ranges.
-" Requires 'textDocument/selectionRange' support of LS, ex: coc-tsserver
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
-
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
-
-" Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-" Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-" Add (Neo)Vim's native statusline support.
-" NOTE: Please see `:h coc-status` for integrations with external plugins that
-" provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-" Mappings using CoCList:
-" Show all diagnostics.
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions.
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands.
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document.
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols.
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list.
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+source ~/.config/nvim/coc.vim
 
 
-"*****************************************************************************
-"*****************************************************************************
 
 "" Include user's extra bundle
 if filereadable(expand("~/.vimrc.local.bundles"))
@@ -420,23 +243,13 @@ let g:session_command_aliases = 1
 "*****************************************************************************
 "" Visual Settings
 "*****************************************************************************
-set termguicolors
 set t_ut=
 syntax on
 set ruler
 set number
 
 let no_buffers_menu=1
-"silent! colorscheme onedark
-"silent! colorscheme onedark
-"silent! colorscheme base16-tomorrow-night
-"silent! colorscheme Tomorrow-Night-Bright
-
-"silent! colorscheme one
-"silent! colorscheme neodark
-
 set mousemodel=popup
-"set t_Co=256
 set guioptions=egmrti
 set gfn=Monospace\ 10
 
@@ -464,11 +277,6 @@ else
     endif
 
 endif
-
-
-"if &term =~ '256color'
-"   set t_ut=
-"endif
 
 
 "" Disable the blinking cursor.
@@ -694,7 +502,6 @@ noremap <leader>w :bn<CR>
 noremap <leader>c :Bdelete<CR>
 
 "" Clean search (highlight)
-nnoremap <silent> <leader><space> :noh<cr>
 
 "" Switching windows
 noremap <C-j> <C-w>j
@@ -717,90 +524,17 @@ nnoremap <Leader>o :.Gbrowse<CR>
 "" Custom configs
 "*****************************************************************************
 
-" c
-autocmd FileType c setlocal tabstop=4 shiftwidth=4 expandtab
-autocmd FileType cpp setlocal tabstop=4 shiftwidth=4 expandtab
-
-
-" elixir
-
-
 " elm
 " elm-vim
-let g:elm_setup_keybindings = 0
-let g:elm_format_autosave = 1
+"let g:elm_setup_keybindings = 0
+"let g:elm_format_autosave = 1
 
 " vim-polyglot
 let g:polyglot_disabled = ['elm']
 
-
 " erlang
-let erlang_folding = 1
-let erlang_show_errors = 1
-
-
-" go
-" vim-go
-" run :GoBuild or :GoTestCompile based on the go file
-function! s:build_go_files()
-    let l:file = expand('%')
-    if l:file =~# '^\f\+_test\.go$'
-        call go#test#Test(0, 1)
-    elseif l:file =~# '^\f\+\.go$'
-        call go#cmd#Build(0)
-    endif
-endfunction
-
-let g:go_list_type = "quickfix"
-let g:go_fmt_command = "goimports"
-let g:go_fmt_fail_silently = 1
-
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_generate_tags = 1
-let g:go_highlight_space_tab_error = 0
-let g:go_highlight_array_whitespace_error = 0
-let g:go_highlight_trailing_whitespace_error = 0
-let g:go_highlight_extra_types = 1
-
-autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
-
-augroup completion_preview_close
-    autocmd!
-    if v:version > 703 || v:version == 703 && has('patch598')
-        autocmd CompleteDone * if !&previewwindow && &completeopt =~ 'preview' | silent! pclose | endif
-    endif
-augroup END
-
-augroup go
-
-    au!
-    au Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-    au Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-    au Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-    au Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
-
-    au FileType go nmap <Leader>dd <Plug>(go-def-vertical)
-    au FileType go nmap <Leader>dv <Plug>(go-doc-vertical)
-    au FileType go nmap <Leader>db <Plug>(go-doc-browser)
-
-    au FileType go nmap <leader>r  <Plug>(go-run)
-    au FileType go nmap <leader>t  <Plug>(go-test)
-    au FileType go nmap <Leader>gt <Plug>(go-coverage-toggle)
-    au FileType go nmap <Leader>i <Plug>(go-info)
-    au FileType go nmap <silent> <Leader>l <Plug>(go-metalinter)
-    au FileType go nmap <C-g> :GoDecls<cr>
-    au FileType go nmap <leader>dr :GoDeclsDir<cr>
-    au FileType go imap <C-g> <esc>:<C-u>GoDecls<cr>
-    au FileType go imap <leader>dr <esc>:<C-u>GoDeclsDir<cr>
-    au FileType go nmap <leader>rb :<C-u>call <SID>build_go_files()<CR>
-
-augroup END
+"let erlang_folding = 1
+"let erlang_show_errors = 1
 
 " ale
 :call extend(g:ale_linters, {
@@ -814,11 +548,6 @@ let g:necoghc_enable_detailed_browse = 1
 autocmd Filetype haskell setlocal omnifunc=necoghc#omnifunc
 
 
-" html
-" for html files, 2 spaces
-autocmd Filetype html setlocal ts=2 sw=2 expandtab
-
-
 " javascript
 let g:javascript_enable_domhtmlcss = 1
 
@@ -829,71 +558,13 @@ augroup vimrc-javascript
 augroup END
 
 
-" lisp
-
-
-" lua
-
-
-" php
-
-
-" python
-" vim-python
-augroup vimrc-python
-    autocmd!
-    autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8 colorcolumn=79
-                \ formatoptions+=croq softtabstop=4
-                \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
-augroup END
-
-" jedi-vim
-let g:jedi#popup_on_dot = 0
-let g:jedi#goto_assignments_command = "<leader>g"
-let g:jedi#goto_definitions_command = "<leader>d"
-let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "<leader>n"
-let g:jedi#rename_command = "<leader>r"
-let g:jedi#show_call_signatures = "0"
-let g:jedi#completions_command = "<C-Space>"
-let g:jedi#smart_auto_mappings = 0
-
-" ale
-:call extend(g:ale_linters, {
-            \'python': ['flake8'], })
-
-" vim-airline
-let g:airline#extensions#virtualenv#enabled = 1
-
-" Syntax highlight
-" Default highlight is better than polyglot
-let g:polyglot_disabled = ['python']
-let python_highlight_all = 1
-
-
-" rust
-" Vim racer
-au FileType rust nmap gd <Plug>(rust-def)
-au FileType rust nmap gs <Plug>(rust-def-split)
-au FileType rust nmap gx <Plug>(rust-def-vertical)
-au FileType rust nmap <leader>gd <Plug>(rust-doc)
-
-
-" scala
-
-
 " typescript
 let g:yats_host_keyword = 1
 
 
-
 "*****************************************************************************
 "*****************************************************************************
 
-"" Include user's local vim config
-if filereadable(expand("~/.vimrc.local"))
-    source ~/.vimrc.local
-endif
 
 "*****************************************************************************
 "" Convenience variables
@@ -937,37 +608,6 @@ endif
 
 
 
-set guicursor=a:ver30
-
-"nnoremap <leader>j zfi}
+source ~/.config/nvim/me.vim
 
 
-nnoremap s :w<cr>
-"vnoremap <leader>j :w !/mnt/c/Windows/System32/clip.exe<cr>
-"xnoremap <leader>j <esc>:'<,'>w !/mnt/c/Windows/System32/clip.exe
-"nnoremap <leader>y :call system('/mnt/c/Windows/System32/clip.exe', getreg('"', 1, 1) + (getregtype('"') isnot# 'v' ? [''] : []))<cr>
-
-"nnoremap <leader>j zfi}
-set foldmethod=indent
-set foldnestmax=10
-set nofoldenable
-set foldlevel=2
-
-let NERDTreeShowHidden=1
-
-let delimitMate_matchpairs = "(:),[:],{:}"
-
-inoremap <silent> <Esc> <Esc>`^
-let g:NERDTreeMapMenu='z'
-
-nnoremap <silent> L :call CocAction('doHover')<CR>
-silent! colorscheme base16-gruvbox-dark-hard
-"let g:gruvbox_contrast_dark='hard'
-let g:airline_theme = 'base16' " 'onedark' 'base16' 'powerlineish'
-"set notermguicolors
-set relativenumber
-
-"highlight Normal ctermbg=NONE
-"highlight nonText ctermbg=NONE
-
-"highlight Normal ctermbg=gray13
