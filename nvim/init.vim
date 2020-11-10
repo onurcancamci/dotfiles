@@ -1,6 +1,8 @@
 " vim-bootstrap
 
 set nocompatible
+let g:polyglot_disabled = []
+
 
 "*****************************************************************************
 "" Vim-PLug core
@@ -43,18 +45,18 @@ Plug 'airblade/vim-gitgutter'
 Plug 'vim-scripts/grep.vim'
 Plug 'vim-scripts/CSApprox'
 Plug 'Raimondi/delimitMate'
-Plug 'majutsushi/tagbar'
-Plug 'w0rp/ale'
-Plug 'Yggdroot/indentLine'
+"Plug 'majutsushi/tagbar'
+"Plug 'w0rp/ale'
+"Plug 'Yggdroot/indentLine'
 Plug 'avelino/vim-bootstrap-updater'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-rhubarb' " required by fugitive to :Gbrowse
 
 if isdirectory('/usr/local/opt/fzf')
-    Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
+    "Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 else
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
-    Plug 'junegunn/fzf.vim'
+    "Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+    "Plug 'junegunn/fzf.vim'
 endif
 let g:make = 'gmake'
 if exists('make')
@@ -76,62 +78,18 @@ Plug 'garbas/vim-snipmate'
 "" Color
 "Plug 'tomasr/molokai'
 Plug 'occ55/onedark.vim'
-"Plug 'rakr/vim-one'
 "Plug 'KeitaNakamura/neodark.vim'
 "Plug 'mukiwu/vim-tomorrow-night'
 
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-"*****************************************************************************
-"" Custom bundles
-"*****************************************************************************
-
-" elixir
-"Plug 'elixir-lang/vim-elixir'
-"Plug 'carlosgaldino/elixir-snippets'
-
-" elm
-"" Elm Bundle
-"Plug 'elmcast/elm-vim'
-
-" erlang
-"Plug 'jimenezrick/vimerl'
-
-" haskell
-" Haskell Bundle
-"Plug 'eagletmt/neco-ghc'
-"Plug 'dag/vim2hs'
-"Plug 'pbrisbin/vim-syntax-shakespeare'
-
-" javascript
-"" Javascript Bundle
 Plug 'jelera/vim-javascript-syntax'
-
-" lisp
-" Lisp Bundle
-"Plug 'vim-scripts/slimv.vim'
-
-
-" lua
-"" Lua Bundle
-"Plug 'xolox/vim-lua-ftplugin'
-"Plug 'xolox/vim-lua-inspect'
-
-
-" scala
-"if has('python')
-    " sbt-vim
-"   Plug 'ktvoelker/sbt-vim'
-"endif
-" vim-scala
-"Plug 'derekwyatt/vim-scala'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'kien/ctrlp.vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'moll/vim-bbye'
-Plug 'kshenoy/vim-signature'
-"Plug 'alx741/vim-rustfmt'
+"Plug 'kshenoy/vim-signature'
 
 Plug 'chriskempson/base16-vim'
 "Plug 'chriskempson/vim-tomorrow-theme'

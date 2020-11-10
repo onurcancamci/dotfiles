@@ -33,6 +33,7 @@ set relativenumber
 
 let g:WebDevIconsOS = 'Darwin'
 
+
 "onedark.vim override: Set a custom background color in the terminal
 " && !has("gui_running")
 if (has("autocmd"))

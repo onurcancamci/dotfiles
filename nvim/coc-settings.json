@@ -1,3 +1,13 @@
 {
-    "flutter.provider.hot-reload": false
+    "flutter.provider.hot-reload": false,
+    "sql.database": "postgresql",
+    "tsserver.formatOnType": false,
+    "tsserver.implicitProjectConfig.experimentalDecorators": true,
+    "typescript.updateImportsOnFileMove.enable": false,
+    "typescript.preferences.quoteStyle": "double",
+    "typescript.suggest.completeFunctionCalls": false,
+    "typescript.format.enabled": false,
+    "javascript.format.enabled": false,
+    "javascript.updateImportsOnFileMove.enable": false,
+    "javascript.suggest.completeFunctionCalls": false
 }
