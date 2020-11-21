@@ -7,33 +7,39 @@ let g:polyglot_disabled = []
 "*****************************************************************************
 "" Vim-PLug core
 "*****************************************************************************
-let vimplug_exists=expand('~/.vim/autoload/plug.vim')
-let g:vim_bootstrap_langs = "c,elixir,elm,erlang,go,haskell,html,javascript,lisp,lua,php,python,rust,scala,typescript"
-let g:vim_bootstrap_editor = "vim"              " nvim or vim
+let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
+if has('win32')&&!has('win64')
+  let curl_exists=expand('C:\Windows\Sysnative\curl.exe')
+else
+  let curl_exists=expand('curl')
+endif
 
 if !filereadable(vimplug_exists)
-    if !executable("curl")
-        echoerr "You have to install curl or first install vim-plug yourself!"
-        execute "q!"
-    endif
-    echo "Installing Vim-Plug..."
-    echo ""
-    silent exec "!\curl -fLo " . vimplug_exists . " --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-    let g:not_finish_vimplug = "yes"
+  if !executable(curl_exists)
+    echoerr "You have to install curl or first install vim-plug yourself!"
+    execute "q!"
+  endif
+  echo "Installing Vim-Plug..."
+  echo ""
+  silent exec "!"curl_exists" -fLo " . shellescape(vimplug_exists) . " --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  let g:not_finish_vimplug = "yes"
 
-    autocmd VimEnter * PlugInstall
+  autocmd VimEnter * PlugInstall
 endif
 
 " Required:
-call plug#begin(expand('~/.vim/plugged'))
+call plug#begin(expand('~/.config/nvim/plugged'))
 
 "*****************************************************************************
 "" Plug install packages
 "*****************************************************************************
-Plug 'rakr/vim-one'
-Plug 'dart-lang/dart-vim-plugin'
-Plug 'thosakwe/vim-flutter'
-Plug 'jparise/vim-graphql'
+"Plug 'dart-lang/dart-vim-plugin'
+"Plug 'thosakwe/vim-flutter'
+"Plug 'jparise/vim-graphql'
+"Plug 'mindriot101/vim-yapf'
+
+Plug 'racer-rust/vim-racer'
+Plug 'rust-lang/rust.vim'
 
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
@@ -41,14 +47,16 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+"Plug 'itchyny/lightline.vim'
+"Plug 'shinchu/lightline-gruvbox.vim'
+
 Plug 'airblade/vim-gitgutter'
-Plug 'vim-scripts/grep.vim'
-Plug 'vim-scripts/CSApprox'
+"Plug 'vim-scripts/grep.vim'
+"Plug 'vim-scripts/CSApprox'
 Plug 'Raimondi/delimitMate'
 "Plug 'majutsushi/tagbar'
 "Plug 'w0rp/ale'
 "Plug 'Yggdroot/indentLine'
-Plug 'avelino/vim-bootstrap-updater'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-rhubarb' " required by fugitive to :Gbrowse
 
@@ -66,38 +74,39 @@ Plug 'Shougo/vimproc.vim', {'do': g:make}
 
 "" Vim-Session
 Plug 'xolox/vim-misc'
-Plug 'xolox/vim-session'
+"Plug 'xolox/vim-session'
 
 "" Snippets
 "Plug 'SirVer/ultisnips'
 "Plug 'honza/vim-snippets'
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'tomtom/tlib_vim'
-Plug 'garbas/vim-snipmate'
+"Plug 'MarcWeber/vim-addon-mw-utils'
+"Plug 'tomtom/tlib_vim'
+"Plug 'garbas/vim-snipmate'
 
 "" Color
 "Plug 'tomasr/molokai'
 Plug 'occ55/onedark.vim'
+Plug 'chriskempson/base16-vim'
 "Plug 'KeitaNakamura/neodark.vim'
 "Plug 'mukiwu/vim-tomorrow-night'
+"Plug 'chriskempson/vim-tomorrow-theme'
+"Plug 'ayu-theme/ayu-vim'
+"Plug 'morhetz/gruvbox'
 
-Plug 'ryanoasis/vim-devicons'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'jelera/vim-javascript-syntax'
+"Plug 'ryanoasis/vim-devicons'
+"Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+"Plug 'jelera/vim-javascript-syntax'
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
 Plug 'kien/ctrlp.vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'moll/vim-bbye'
 "Plug 'kshenoy/vim-signature'
 
-Plug 'chriskempson/base16-vim'
-"Plug 'chriskempson/vim-tomorrow-theme'
-"Plug 'morhetz/gruvbox'
-"Plug 'ayu-theme/ayu-vim'
-Plug 'kylelaker/riscv.vim'
+"Plug 'kylelaker/riscv.vim'
 Plug 'prettier/vim-prettier'
 
+call plug#end()
 "*****************************************************************************
 "*****************************************************************************
 "" [MY] Settings
@@ -144,11 +153,10 @@ source ~/.config/nvim/coc.vim
 
 
 "" Include user's extra bundle
-if filereadable(expand("~/.vimrc.local.bundles"))
-    source ~/.vimrc.local.bundles
-endif
+"if filereadable(expand("~/.vimrc.local.bundles"))
+"    source ~/.vimrc.local.bundles
+"endif
 
-call plug#end()
 
 " Required:
 filetype plugin indent on
@@ -186,11 +194,6 @@ set smartcase
 
 set fileformats=unix,dos,mac
 
-if exists('$SHELL')
-    set shell=$SHELL
-else
-    set shell=/bin/sh
-endif
 
 " session management
 let g:session_directory = "~/.vim/session"
@@ -207,7 +210,7 @@ set ruler
 set number
 
 let no_buffers_menu=1
-set mousemodel=popup
+set mousemodel=extend
 set guioptions=egmrti
 set gfn=Monospace\ 10
 
@@ -263,12 +266,14 @@ if exists("*fugitive#statusline")
     set statusline+=%{fugitive#statusline()}
 endif
 
+let g:airline_extensions = [ "ctrlp", "term", "tabline"]
+
 " vim-airline
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tagbar#enabled = 1
-let g:airline_skip_empty_sections = 1
+"let g:airline#extensions#branch#enabled = 1
+"let g:airline#extensions#ale#enabled = 1
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tagbar#enabled = 1
+"let g:airline_skip_empty_sections = 1
 
 "*****************************************************************************
 "" Abbreviations
@@ -295,7 +300,7 @@ let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
 let g:NERDTreeWinSize = 35
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 nnoremap <silent> <F2> :NERDTreeFind<CR>
-nnoremap <silent> <F3> :NERDTreeToggle<CR>
+nnoremap <silent> <leader>; :NERDTreeToggle<CR>
 
 " grep.vim
 nnoremap <silent> <leader>f :Rgrep<CR>
@@ -488,15 +493,11 @@ nnoremap <Leader>o :.Gbrowse<CR>
 "let g:elm_format_autosave = 1
 
 " vim-polyglot
-let g:polyglot_disabled = ['elm']
 
 " erlang
 "let erlang_folding = 1
 "let erlang_show_errors = 1
 
-" ale
-:call extend(g:ale_linters, {
-            \"go": ['golint', 'go vet'], })
 
 
 " haskell

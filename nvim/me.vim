@@ -28,7 +28,6 @@ let g:NERDTreeMapMenu='z'
 
 nnoremap <silent> L :call CocAction('doHover')<CR>
 set background=dark
-let g:airline_theme = 'onedark' " 'onedark' 'base16' 'powerlineish'
 set relativenumber
 
 let g:WebDevIconsOS = 'Darwin'
@@ -43,11 +42,31 @@ if (has("autocmd"))
     "autocmd ColorScheme * call onedark#set_highlight("Normal", { "bg": s:background }) "No `fg` setting
   augroup END
 endif
-silent! colorscheme onedark
+
+let g:lightline = {}
+
+if $RUST != ""
+    set background=dark
+    "set base16colorspace=256
+    colorscheme base16-gruvbox-dark-hard
+    syntax on
+    hi Normal ctermbg=NONE
+    let g:airline_theme = 'base16' " 'onedark' 'base16' 'powerlineish'
+    "let g:lightline.colorscheme = 'molokai'
+else
+echo &ft
+    silent! colorscheme onedark
+    let g:airline_theme = 'onedark' " 'onedark' 'base16' 'powerlineish'
+    let g:lightline.colorscheme = 'onedark'
+endif
+
+
 "silent! colorscheme one
 
 
+"autocmd VimEnter * NERDTree
 " ctrl+w 20 > width degistirme
 " zM zm zR zr folds
 set runtimepath+=~/.config/nvim/snippets
  
+

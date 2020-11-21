@@ -9,5 +9,11 @@
     "typescript.format.enabled": false,
     "javascript.format.enabled": false,
     "javascript.updateImportsOnFileMove.enable": false,
-    "javascript.suggest.completeFunctionCalls": false
+    "javascript.suggest.completeFunctionCalls": false,
+    "rust-analyzer.cargo.allFeatures": true,
+    "rust-analyzer.inlayHints.refreshOnInsertMode": false,
+    "coc.preferences.formatOnType": false,
+    "coc.preferences.formatOnSaveFiletypes": [],
+    "rust-analyzer.completion.addCallArgumentSnippets": false,
+    "rust-analyzer.completion.addCallParenthesis": true
 }
