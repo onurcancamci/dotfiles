@@ -33,13 +33,17 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 "*****************************************************************************
 "" Plug install packages
 "*****************************************************************************
-"Plug 'dart-lang/dart-vim-plugin'
-"Plug 'thosakwe/vim-flutter'
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
 "Plug 'jparise/vim-graphql'
 "Plug 'mindriot101/vim-yapf'
 
-Plug 'racer-rust/vim-racer'
+Plug 'psf/black'
+
+"Plug 'racer-rust/vim-racer'
 Plug 'rust-lang/rust.vim'
+Plug 'ARM9/arm-syntax-vim'
+Plug 'VelkyVenik/vim-avr'
 
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
@@ -104,7 +108,9 @@ Plug 'moll/vim-bbye'
 "Plug 'kshenoy/vim-signature'
 
 "Plug 'kylelaker/riscv.vim'
+Plug 'rhysd/vim-clang-format'
 Plug 'prettier/vim-prettier'
+"Plug 'makerj/vim-pdf'
 
 call plug#end()
 "*****************************************************************************
@@ -175,9 +181,9 @@ set ttyfast
 set backspace=indent,eol,start
 
 "" Tabs. May be overridden by autocmd rules
-set tabstop=4
+set tabstop=2
 set softtabstop=0
-set shiftwidth=4
+set shiftwidth=2
 set expandtab
 
 "" Map leader to ,
@@ -378,10 +384,10 @@ noremap <Leader>gd :Gvdiff<CR>
 noremap <Leader>gr :Gremove<CR>
 
 " session management
-nnoremap <leader>so :OpenSession<Space>
-nnoremap <leader>ss :SaveSession<Space>
-nnoremap <leader>sd :DeleteSession<CR>
-nnoremap <leader>sc :CloseSession<CR>
+"nnoremap <leader>so :OpenSession<Space>
+"nnoremap <leader>ss :SaveSession<Space>
+"nnoremap <leader>sd :DeleteSession<CR>
+"nnoremap <leader>sc :CloseSession<CR>
 
 "" Tabs
 nnoremap <Tab> gt

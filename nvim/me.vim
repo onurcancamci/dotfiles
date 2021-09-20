@@ -11,6 +11,9 @@ autocmd CmdlineEnter [/\?] set guicursor=n-c-v:block-Cursor/lCursor-blinkon0,i-c
 set termguicolors
 nnoremap S s
 nnoremap s :w<cr>
+no a i
+no i a
+
 
 set ve+=onemore
 
@@ -60,6 +63,7 @@ echo &ft
     let g:lightline.colorscheme = 'onedark'
 endif
 
+nnoremap <leader>f ^vf{%
 
 "silent! colorscheme one
 
